@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import ExchangeTableRow from "../components/ExchangeTableRow";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
+import fetchData from "../FetchData";
 
 export default function ExchangesPage() {
   const [displayedExchanges, setDisplayedExchanges]: any = useState([
@@ -19,7 +20,10 @@ export default function ExchangesPage() {
     error,
     isLoading,
   } = useQuery({
-    queryFn: loadExchanges,
+    queryFn: () =>
+      fetchData(
+        "https://api.coingecko.com/api/v3/exchanges?per_page=250"
+      ),
     queryKey: ["exchanges"],
     staleTime: 1000 * 60 * 20,
   });
@@ -104,29 +108,4 @@ export default function ExchangesPage() {
       />
     </>
   );
-}
-
-async function loadExchanges() {
-  console.log("fetching");
-  try {
-    const endPoint =
-      "https://api.coingecko.com/api/v3/exchanges?per_page=250";
-
-    const response = await fetch(endPoint, {
-      method: "GET",
-      mode: "cors",
-    });
-
-    if (response.status == 200 || response.status == 201) {
-      return response.json();
-    } else {
-      throw new Error(
-        "Error. Refresh the page or try at a different time."
-      );
-    }
-  } catch (error) {
-    throw new Error(
-      "Error. Refresh the page or try at a different time."
-    );
-  }
 }
