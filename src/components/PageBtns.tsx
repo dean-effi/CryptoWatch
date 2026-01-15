@@ -1,6 +1,3 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-
 export default function PageBtns({
   currentList,
   displayPage,
@@ -34,5 +31,7 @@ export default function PageBtns({
   }
   let pageBtnElems = createBtns();
 
-  return <div className="m-auto mt-3 flex w-fit ">{pageBtnElems}</div>;
+  return (
+    <div className="m-auto mt-3 flex w-fit ">{pageBtnElems}</div>
+  );
 }

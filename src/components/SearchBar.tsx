@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { AppContext } from "../App";
 import searchIcon from "../assets/icons/search.svg";
+import { Coin } from "../types";
 type SearchBarProps = {
-  displayPage: (num?: number, arr?: object[]) => void;
-  itemsList: any[];
+  displayPage: (num?: number, arr?: Coin[]) => void;
+  itemsList: Coin[];
 };
 export default function SearchBar({
   displayPage,
@@ -16,7 +16,6 @@ export default function SearchBar({
 
   let originArr = itemsList;
 
-  let path = useParams();
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchText(e.target.value);
     let search = e.target.value.toLowerCase();
@@ -34,7 +33,7 @@ export default function SearchBar({
       <input
         type="text"
         placeholder="Search"
-        className={`w-full rounded-md bg-slate-100 bg-left p-2 indent-6  dark:bg-slate-500 dark:placeholder-gray-50 md:text-lg
+        className={`w-full rounded-md bg-slate-100 bg-left p-2 pl-3 indent-6  dark:bg-slate-500 dark:placeholder-gray-50 md:text-lg
        
     `}
         onChange={e => handleChange(e)}

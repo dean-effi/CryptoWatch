@@ -5,7 +5,7 @@ import CoinsPage from "./pages/CoinsPage";
 import ExchangesPage from "./pages/ExchangesPage";
 import Favorites from "./pages/Favorites";
 import SingleCoinPage from "./pages/SingleCoinPage";
-import { AppContextType } from "./AppContextType";
+import { AppContextType } from "./types";
 
 export const AppContext = createContext<AppContextType>(null);
 
@@ -23,14 +23,6 @@ export default function App() {
     setFavsList(newFavs);
   }
 
-  function removeFromFavs(coin: any) {
-    let newFavs = favsList.filter((favCoin: any) => {
-      return favCoin.id !== coin.id;
-    });
-    localStorage.setItem("favs", JSON.stringify(newFavs));
-    setFavsList(newFavs);
-  }
-
   useEffect(() => {
     let root = document.querySelector("#root")!;
     if (isDark) {
@@ -41,6 +33,15 @@ export default function App() {
 
     localStorage.setItem("isDark", JSON.stringify(isDark));
   }, [isDark]);
+
+  function removeFromFavs(coin: any) {
+    let newFavs = favsList.filter((favCoin: any) => {
+      return favCoin.id !== coin.id;
+    });
+    localStorage.setItem("favs", JSON.stringify(newFavs));
+    setFavsList(newFavs);
+  }
+
   return (
     <div
       className="min-h-screen max-w-full bg-gradient-to-b from-white  to-slate-300 text-blue-950 dark:from-slate-900

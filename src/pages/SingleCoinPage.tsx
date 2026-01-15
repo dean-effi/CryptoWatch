@@ -24,7 +24,8 @@ export default function SingleCoinPage() {
     let timeVars = [
       [
         "1h",
-        currentCoin.market_data.price_change_percentage_1h_in_currency.usd,
+        currentCoin.market_data.price_change_percentage_1h_in_currency
+          .usd,
       ],
       ["24h", currentCoin.market_data.price_change_percentage_24h],
       ["7d", currentCoin.market_data.price_change_percentage_7d],
@@ -36,7 +37,7 @@ export default function SingleCoinPage() {
       ["1y", currentCoin.market_data.price_change_percentage_1y],
     ];
 
-    return timeVars.map((time) => {
+    return timeVars.map(time => {
       return (
         <TimeChangeBox key={time[0]} num={time[1]}>
           {time[0]}
@@ -55,7 +56,9 @@ export default function SingleCoinPage() {
         <div className="justify-around space-y-6 md:flex">
           <div className=" flex items-center justify-center gap-2">
             <img className="w-10" src={currentCoin.image.large} />
-            <h1 className="text-3xl font-semibold">{currentCoin.name}</h1>
+            <h1 className="text-3xl font-semibold">
+              {currentCoin.name}
+            </h1>
           </div>
 
           <div>
@@ -82,14 +85,18 @@ export default function SingleCoinPage() {
         </div>
 
         <hr />
-        <h2 className=" text-xl font-medium">Price Changes In The Last</h2>
+        <h2 className=" text-xl font-medium">
+          Price Changes In The Last
+        </h2>
         <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
           {createTimeChangeBoxes()}
         </div>
         <hr />
       </section>
       <section className="mt-6 space-y-6 ">
-        <h2 className="text-center text-xl font-medium">Description</h2>
+        <h2 className="text-center text-xl font-medium">
+          Description
+        </h2>
 
         <p className=" m-auto  p-2 text-sm lg:text-base">
           <span className="mt-8" dangerouslySetInnerHTML={descHtml} />

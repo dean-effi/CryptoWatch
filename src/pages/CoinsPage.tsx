@@ -7,17 +7,18 @@ import CoinsTable from "../components/CoinsTable";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
 import fetchData from "../FetchData";
+import { Coin } from "../types";
 
 export default function CoinsPage() {
-  const [displayedCoins, setDisplayedCoins] = useState([{}]);
-  const [currentCoins, setCurrentCoins] = useState([{}]);
+  const [displayedCoins, setDisplayedCoins] = useState<Coin[]>([]);
+  const [currentCoins, setCurrentCoins] = useState<Coin[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const {
     data: coinsList,
     isError,
     isLoading,
     error,
-  } = useQuery({
+  } = useQuery<Coin[]>({
     queryKey: ["coins"],
     queryFn: () =>
       fetchData(
@@ -25,7 +26,9 @@ export default function CoinsPage() {
       ),
     staleTime: 1000 * 60 * 20,
   });
+  console.log(coinsList);
   function displayPage(num = 50, arr = coinsList, page = 1) {
+    if (!arr) return;
     setCurrentPage(page);
     arr && setCurrentCoins(arr);
     let start = 50 * (page - 1);
@@ -49,7 +52,7 @@ export default function CoinsPage() {
     return <p className="text-2xl ">{error.message}</p>;
   }
 
-  let coinRowElems = displayedCoins.map((coin: any) => {
+  let coinRowElems = displayedCoins.map(coin => {
     if (coin == undefined || Object.keys(coin).length < 1) return;
     return <CoinTableRow coin={coin} key={coin.id} />;
   });
@@ -62,7 +65,7 @@ export default function CoinsPage() {
           Cryptocurrency Prices By Current Market Cap
         </PageTitle>
 
-        <SearchBar displayPage={displayPage} itemsList={coinsList} />
+        <SearchBar displayPage={displayPage} itemsList={coinsList!} />
       </section>
 
       <CoinsTable children={coinRowElems} />
