@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
 import fetchData from "../FetchData";
 import TimeBoxes from "../components/TimeBoxes";
+import { ExpandedCoin } from "../types";
 
 export default function SingleCoinPage() {
   let pathId = useParams().id;
@@ -13,7 +14,7 @@ export default function SingleCoinPage() {
     isLoading,
     isError,
     error,
-  } = useQuery({
+  } = useQuery<ExpandedCoin>({
     queryKey: [pathId],
     staleTime: 1000 * 60 * 20,
     queryFn: async () => {
@@ -23,15 +24,11 @@ export default function SingleCoinPage() {
       );
     },
   });
-
   if (isLoading) return <Loading />;
   if (isError) {
     return <p className="text-2xl ">{error.message}</p>;
   }
-  let descHtml = { __html: "placeholder" };
-  if (currentCoin !== null) {
-    descHtml = { __html: currentCoin.description.en };
-  }
+  if (!currentCoin) return;
   return (
     <div className="rounded-md bg-gray-100 p-6 dark:bg-slate-600">
       <section className="justify-around space-y-6 text-center ">
@@ -78,11 +75,8 @@ export default function SingleCoinPage() {
           Description
         </h2>
 
-        <p className=" m-auto  p-2 text-sm lg:text-base">
-          <span
-            className="pl-2 leading-loose tracking-wider"
-            dangerouslySetInnerHTML={descHtml}
-          />
+        <p className=" m-auto whitespace-pre-line p-2 pl-2  text-base leading-loose tracking-wider lg:text-lg">
+          {currentCoin.description.en}
         </p>
       </section>
     </div>

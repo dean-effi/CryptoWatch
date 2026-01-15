@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PageBtns from "../components/PageBtns";
 import PageTitle from "../components/PageTitle";
 import SearchBar from "../components/SearchBar";
