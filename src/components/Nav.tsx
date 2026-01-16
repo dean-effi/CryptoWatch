@@ -16,7 +16,7 @@ type navProps = {
 };
 export default function Nav({ setIsDark }: navProps) {
   const [isOpen, setIsOpen] = useState(false);
-  let { isDark }: any = useContext(AppContext);
+  let { isDark } = useContext(AppContext)!;
   return (
     <nav className=" relative  m-auto flex items-center  justify-between  p-4 px-6 font-semibold lg:w-3/4">
       <Link to={"/"}>

@@ -5,24 +5,31 @@ import CoinsPage from "./pages/CoinsPage";
 import ExchangesPage from "./pages/ExchangesPage";
 import Favorites from "./pages/Favorites";
 import SingleCoinPage from "./pages/SingleCoinPage";
-import { AppContextType } from "./types";
+import { AppContextType, Coin } from "./types";
 
 export const AppContext = createContext<AppContextType>(null);
 
 export default function App() {
-  const [isDark, setIsDark] = useState(
-    JSON.parse(localStorage.getItem("isDark")!)
+  const [isDark, setIsDark] = useState<boolean>(
+    JSON.parse(localStorage.getItem("isDark")!) || false
   );
 
-  const [favsList, setFavsList] = useState([
+  const [favsList, setFavsList] = useState<Coin[]>([
     ...(JSON.parse(localStorage.getItem("favs")!) || []),
   ]);
-  function addToFavs(coin: any) {
-    let newFavs = [...favsList, coin];
+
+  function toggleFavs(coin: Coin) {
+    let newFavs: Coin[] = [];
+    if (favsList.find(c => c.id == coin.id)) {
+      newFavs = favsList.filter((favCoin: Coin) => {
+        return favCoin.id !== coin.id;
+      });
+    } else {
+      newFavs = [...favsList, coin];
+    }
     localStorage.setItem("favs", JSON.stringify(newFavs));
     setFavsList(newFavs);
   }
-
   useEffect(() => {
     let root = document.querySelector("#root")!;
     if (isDark) {
@@ -34,14 +41,6 @@ export default function App() {
     localStorage.setItem("isDark", JSON.stringify(isDark));
   }, [isDark]);
 
-  function removeFromFavs(coin: any) {
-    let newFavs = favsList.filter((favCoin: any) => {
-      return favCoin.id !== coin.id;
-    });
-    localStorage.setItem("favs", JSON.stringify(newFavs));
-    setFavsList(newFavs);
-  }
-
   return (
     <div
       className="min-h-screen max-w-full bg-gradient-to-b from-white  to-slate-300 text-blue-950 dark:from-slate-900
@@ -50,9 +49,8 @@ export default function App() {
       <AppContext.Provider
         value={{
           isDark: isDark,
-          addToFavs: addToFavs,
           favsList: favsList,
-          removeFromFavs: removeFromFavs,
+          toggleFavs: toggleFavs,
         }}
       >
         <header className=" sticky top-0 z-10  bg-white shadow-lg dark:bg-slate-950">

@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 export default function Loading() {
-  let { isDark }: any = useContext(AppContext);
+  const { isDark } = useContext(AppContext)!;
 
   return (
     <div className="w-full dark:text-white">

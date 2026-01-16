@@ -28,7 +28,7 @@ export default function SingleCoinPage() {
   if (isError) {
     return <p className="text-2xl ">{error.message}</p>;
   }
-  if (!currentCoin) return;
+  if (!currentCoin) return <div></div>;
   return (
     <div className="rounded-md bg-gray-100 p-6 dark:bg-slate-600">
       <section className="justify-around space-y-6 text-center ">

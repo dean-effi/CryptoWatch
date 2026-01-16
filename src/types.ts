@@ -1,7 +1,6 @@
 export type AppContextType = {
   isDark: boolean;
-  addToFavs: (coin: any) => void;
-  removeFromFavs: (coin: any) => void;
+  toggleFavs: (coin: Coin) => void;
   favsList: object[];
 } | null;
 
